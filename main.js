@@ -24,7 +24,7 @@ const handleSubmit = (e) => {
   
   let query = searchInput.value;
 
-  fetch(`http://www.omdbapi.com/?t=${query}&apikey=beca4155`)
+  fetch(`http://www.omdbapi.com/?t=${query}&plot=full&apikey=beca4155`)
     .then(response => response.json())
     .then(response => {
       console.log(response)
@@ -44,15 +44,34 @@ const noMoviesMatched = (query) => {
 
 const populateGallery = (results) => {
   movieInfo.innerHTML = '';
-  let title = document.createElement('h2');
+
+  const title = document.createElement('h2');
   title.innerText = results.Title;
   movieInfo.append(title);
-  let year = document.createElement('h3');
+
+  const year = document.createElement('h3');
   year.innerText = `(${results.Year})`;
   movieInfo.append(year);
-  let poster = document.createElement('img');
+
+  const movieDetails = document.createElement('div');
+  movieDetails.setAttribute('class', 'movie-details');
+  movieInfo.append(movieDetails);
+
+  const containerL = document.createElement('div');
+  containerL.setAttribute('class', 'container-left');
+  movieDetails.append(containerL);
+  
+  const containerR = document.createElement('div');
+  containerL.setAttribute('class', 'container-right');
+  movieDetails.append(containerR);
+
+  const poster = document.createElement('img');
   poster.setAttribute('src', results.Poster);
-  movieInfo.append(poster);
+  containerL.append(poster);
+
+  const plot = document.createElement('p');
+  plot.innerText = results.Plot;
+  containerR.append(plot);
 }
 
 
